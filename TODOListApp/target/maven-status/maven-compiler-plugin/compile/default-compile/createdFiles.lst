@@ -1,0 +1,5 @@
+TODOlist\app\Entity\Task.class
+TODOlist\app\Repository\UserRepository.class
+TODOlist\app\Entity\User.class
+TODOlist\app\Main.class
+TODOlist\app\Repository\TaskRepository.class
