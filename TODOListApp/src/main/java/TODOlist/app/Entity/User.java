@@ -1,6 +1,8 @@
 package TODOlist.app.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -20,8 +22,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Task> task;
 
     public Long getId() {
         return id;
@@ -55,11 +58,11 @@ public class User {
         this.email = email;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Task> getTask() {
+        return task;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setTask(List<Task> task) {
+        this.task = task;
     }
 }

@@ -1,5 +1,11 @@
+TODOlist\app\Service\ServiceImpl.class
+TODOlist\app\Controller\UserController.class
+TODOlist\app\package-info.class
+TODOlist\app\Repository\TaskRepository.class
 TODOlist\app\Entity\Task.class
+TODOlist\app\Exception\UserNotFoundException.class
 TODOlist\app\Repository\UserRepository.class
 TODOlist\app\Entity\User.class
 TODOlist\app\Main.class
-TODOlist\app\Repository\TaskRepository.class
+TODOlist\app\Config\OpenAPIConfig.class
+TODOlist\app\Service\Service.class
