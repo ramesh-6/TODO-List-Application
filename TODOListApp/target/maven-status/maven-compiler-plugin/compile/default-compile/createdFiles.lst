@@ -1,5 +1,5 @@
-TODOlist\app\Service\ServiceImpl.class
-TODOlist\app\Controller\UserController.class
+TODOlist\app\Service\TODOService.class
+TODOlist\app\Service\TODOServiceImpl.class
 TODOlist\app\package-info.class
 TODOlist\app\Repository\TaskRepository.class
 TODOlist\app\Entity\Task.class
@@ -8,4 +8,4 @@ TODOlist\app\Repository\UserRepository.class
 TODOlist\app\Entity\User.class
 TODOlist\app\Main.class
 TODOlist\app\Config\OpenAPIConfig.class
-TODOlist\app\Service\Service.class
+TODOlist\app\Controller\Controller.class

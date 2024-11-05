@@ -16,6 +16,17 @@ public class Task {
 
     private String description;
 
+    public Task() {
+    }
+
+    public Task(Long id, String title, String description, Boolean completed, User user) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+        this.user = user;
+    }
+
     @Column(nullable = false)
     private Boolean completed = false;
 
