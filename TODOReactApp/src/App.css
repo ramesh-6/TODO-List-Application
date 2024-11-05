@@ -1,0 +1,210 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: #0d0d0d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 900;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.completedTask {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.taskDone {
+    font-size: 1.2rem;
+    font-family:Verdana;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.no {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1777ff;
+    font-family:Verdana;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border-radius: 50%;
+}
+
+.inputRow {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #1777ff;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+::placeholder {
+    text-align: center;
+    font-size: 12px;
+    font-family:Verdana;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+  }
+
+.inputButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.75rem;
+    cursor: pointer;
+}
+
+.taskRow {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task {
+    width: 100%;
+    min-height: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family:Verdana;
+    letter-spacing: 0.2px;
+}
+
+.taskCheckbox{
+    transform: scale(1.35);
+}
+
+.taskButtonDiv{
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.taskButton {
+    padding: 0.5rem;
+    background-color: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.taskUpdateDiv{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.taskUpdateInput{
+    flex-grow: 1;
+    height: 80%;
+    padding: 0.5rem;
+    border: 1px solid #1777ff;
+    border-radius: 5px;
+    margin-left: 20px;
+    font-family:Verdana;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    text-align: center;
+}
+
+.taskUpdateSaveButton{
+    padding: 0.5rem;
+    background-color: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .no {
+        height: 60px;
+        width: 60px;
+        font-size: 1rem;
+    }
+
+    .taskDone {
+        font-size: 0.9rem;
+    }
+
+    .inputRow, .taskRow {
+        max-width: 90%;
+    }
+}
