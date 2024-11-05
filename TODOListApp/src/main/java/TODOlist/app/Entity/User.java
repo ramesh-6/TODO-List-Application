@@ -26,6 +26,17 @@ public class User {
     @JsonIgnore
     private List<Task> task;
 
+    public User() {
+    }
+
+    public User(Long id, String username, String password, String email, List<Task> task) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.task = task;
+    }
+
     public Long getId() {
         return id;
     }
