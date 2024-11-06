@@ -4,90 +4,88 @@ import { DeleteFilled, SaveFilled, EditFilled, CheckSquareTwoTone, PlusSquareFil
 
 export default function App() {
   const [tasks, setTasks] = useState([
-    { name: "Task1", checked: true, active: true },
-    { name: "Task2", checked: true, active: true },
-    { name: "Task3", checked: true, active: true }
+    { id: 1,name: "Task1", completed: true, active: false },
+    { id: 2,name: "Task2", completed: true, active: false },
+    { id: 3,name: "Task3", completed: true, active: false }
   ]);
-  // const [checkbox, setCehckbox] = useState({});
+  const [update, setUpdate] = useState({});
   const [input, setInput] = useState('');
   const [updatedInputs, setUpdatedInputs] = useState({});
-  const totalDone = tasks.filter(task => task.checked).length;
+  const totalDone = tasks.filter(task => task.completed).length
 
   function addTask() {
-    setTasks([...tasks, { name: input, checked: false, active: true }]);
-    setInput('');
+    setTasks([...tasks, { name: input, completed: false, active: false }])
+    setInput('')
   }
 
   function toggleTask(index) {
-    const updatedChecked = tasks.map((task, i) =>
-      i === index ? { ...task, checked: !task.checked } : task
-    );
+    const updatedChecked = tasks.map((task) =>
+      task.id === index ? { ...task, completed: !task.completed } : task
+    )
     setTasks(updatedChecked);
   }
 
   function toggleUpdate(index) {
-    const updatedActive = tasks.map((task, i) =>
-      i === index ? { ...task, active: !task.active } : task
-    );
-    // Set initial value for `updatedInputs[index]` if entering edit mode
-    setUpdatedInputs(prev => ({ ...prev, [index]: tasks[index].name }));
+    const updatedActive = tasks.map((task) =>
+      task.id === index ? { ...task, active: !task.active } : task
+    )
+    setUpdatedInputs(prev => ({ ...prev, [index]: tasks.find(task => task.id===index).name}));
     setTasks(updatedActive);
   }
 
   function handleEditInputChange(index, value) {
-    // Update only the specific task's editing input in `updatedInputs`
     setUpdatedInputs(prev => ({ ...prev, [index]: value }));
   }
 
   function updateTask(index) {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index
-        ? { ...task, name: updatedInputs[index], active: !task.active }  // Apply the updated input
+    const updatedTasks = tasks.map((task) =>
+      task.id === index
+        ? { ...task, name: updatedInputs[index], active: !task.active }
         : task
-    );
+    )
     setTasks(updatedTasks);
 
     // Remove the entry from `updatedInputs` after updating
     setUpdatedInputs(prev => {
       const { [index]: removed, ...rest } = prev;
       return rest;
-    });
+    })
   }
 
   function deleteTask(index) {
-    const deletedTasks = tasks.filter((task, i) => i !== index);
-    setTasks(deletedTasks);
+    const deletedTasks = tasks.filter((task) => task.id !== index);
+    setTasks(deletedTasks)
 
     // Clean up `updatedInputs` for the deleted task
     setUpdatedInputs(prev => {
-      const { [index]: removed, ...rest } = prev;
+      const { [index]: removed, ...rest } = prev
       return rest;
     });
   }
 
-  const taskList = tasks.map((task, index) => (
-    <div key={index} className="task">
-      <input type="checkbox" className="taskCheckbox" checked={task.checked} onChange={() => toggleTask(index)} />
-      {task.active ? (
+  const taskList = tasks.map((task) => (
+    <div key={task.id} className="task">
+      <input type="checkbox" className="taskCheckbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
+      {!task.active ? (
         <>
           <ul>{task.name}</ul>
           <div className="taskButtonDiv">
-            <button className="taskButton" onClick={() => toggleUpdate(index)}><EditFilled /></button>
-            <button className="taskButton" onClick={() => deleteTask(index)}><DeleteFilled /></button>
+            <button className="taskButton" onClick={() => toggleUpdate(task.id)}><EditFilled /></button>
+            <button className="taskButton" onClick={() => deleteTask(task.id)}><DeleteFilled /></button>
           </div>
         </>
       ) : (
         <div className="taskUpdateDiv">
           <input
             className="taskUpdateInput"
-            value={updatedInputs[index] || ''}  // Use updatedInputs[index] for controlled input
-            onChange={(e) => handleEditInputChange(index, e.target.value)}
+            value={updatedInputs[task.id] || ''}
+            onChange={(e) => handleEditInputChange(task.id, e.target.value)}
           />
-          <button className="taskUpdateSaveButton" onClick={() => updateTask(index)}><SaveFilled /></button>
+          <button className="taskUpdateSaveButton" onClick={() => updateTask(task.id)}><SaveFilled /></button>
         </div>
       )}
     </div>
-  ));
+  ))
 
   return (
     <>
@@ -109,5 +107,5 @@ export default function App() {
         <div className="taskRow">{taskList}</div>
       </div>
     </>
-  );
+  )
 }
