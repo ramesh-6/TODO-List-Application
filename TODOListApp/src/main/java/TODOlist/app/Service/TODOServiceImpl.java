@@ -95,7 +95,6 @@ public class TODOServiceImpl implements TODOService {
             Task taskUpdate = taskDB.get();
             taskUpdate.setId(task.getId());
             taskUpdate.setTitle(task.getTitle());
-            taskUpdate.setDescription(task.getDescription());
             taskUpdate.setCompleted(task.getCompleted());
             taskUpdate.setUser(task.getUser());
             taskRepository.save(taskUpdate);

@@ -26,12 +26,12 @@ public class Controller {
     }
 
     @GetMapping("/User/{id}")
-    public User getUserById(@PathVariable long id) {
+    public User getUserById(@PathVariable("id") long id) {
         return TODOService.getUserById(id);
     }
 
     @GetMapping("/Task/{id}")
-    public Task getTaskById(@PathVariable long id) {
+    public Task getTaskById(@PathVariable("id") long id) {
         return TODOService.getTaskById(id);
     }
 
@@ -68,20 +68,20 @@ public class Controller {
 
     @PutMapping("/Task/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Task updateTask(@PathVariable long id, @RequestBody Task task) {
+    public Task updateTask(@PathVariable("id") long id, @RequestBody Task task) {
         task.setId(id);
         return this.TODOService.updateTask(task);
     }
 
     @DeleteMapping("/User/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable long id) {
+    public void deleteUser(@PathVariable("id") long id) {
         this.TODOService.deleteUser(id);
     }
 
     @DeleteMapping("/Task/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTask(@PathVariable long id) {
+    public void deleteTask(@PathVariable("id") long id) {
         this.TODOService.deleteTask(id);
     }
 

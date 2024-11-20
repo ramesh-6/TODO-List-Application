@@ -14,7 +14,6 @@ public class Task {
     @Column(nullable = false)
     private String title;
 
-    private String description;
 
     public Task() {
     }
@@ -22,7 +21,6 @@ public class Task {
     public Task(Long id, String title, String description, Boolean completed, User user) {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.completed = completed;
         this.user = user;
     }
@@ -48,14 +46,6 @@ public class Task {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Boolean getCompleted() {
