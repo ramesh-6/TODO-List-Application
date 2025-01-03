@@ -1,6 +1,6 @@
 import { React, useContext, useEffect, useState } from "react";
-import {} from "../App.css";
-import {taskContext} from "../Contexts/TaskContext";
+import {} from "../../App.css";
+import { taskContext } from "../../Contexts/TaskContext";
 
 function TaskCounter() {
   const { tasks } = useContext(taskContext);

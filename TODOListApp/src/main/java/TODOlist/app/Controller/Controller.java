@@ -35,6 +35,11 @@ public class Controller {
         return TODOService.getTaskById(id);
     }
 
+    @GetMapping("/Tasks/{id}")
+    public List<Task> getTasksById(@PathVariable("id") long id) {
+        return TODOService.getTasksByUserId(id);
+    }
+    
     @PostMapping("/User")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody User user) {

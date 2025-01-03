@@ -1,12 +1,11 @@
-import { React, useContext, useState } from "react";
-import {} from "../App.css";
-import { useTasks } from "../Hooks/TaskHooks";
-import { taskContext } from "../Contexts/TaskContext";
+import { React, useState } from "react";
+import {} from "../../App.css";
+import { useTasks } from "../../Hooks/TaskHooks";
 import { PlusSquareFilled } from "@ant-design/icons";
 
 function TaskInputRow() {
-  const [input, setInput] = useState("default");
-  const { postTasks } = useTasks();
+  const [input, setInput] = useState("");
+  const { postTask } = useTasks();
 
   return (
     <div className="inputRow">
@@ -14,11 +13,12 @@ function TaskInputRow() {
         className="input"
         placeholder="write your next task"
         value={input}
+        onKeyDown={(e) => (e.key === "Enter" ? postTask(input, setInput) : "")}
         onChange={(e) => setInput(e.target.value)}
       />
       <button
         className="inputButton"
-        onClick={() => postTasks(input, setInput)}
+        onClick={() => postTask(input, setInput)}
       >
         <PlusSquareFilled />
       </button>

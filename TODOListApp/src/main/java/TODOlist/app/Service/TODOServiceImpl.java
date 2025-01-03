@@ -53,6 +53,18 @@ public class TODOServiceImpl implements TODOService {
     }
 
     @Override
+    public List<Task> getTasksByUserId(long userId) {
+        Optional<User> userDB = this.userRepository.findById(userId);
+        List<Task> taskDB = this.taskRepository.findTasksByUser(userDB);
+
+        if (userDB.isPresent()) {
+            return taskDB;
+        } else {
+            throw new UserNotFoundException("User not found with id : " + userId);
+        }
+    }
+
+    @Override
     public User createUser(User user) {
         return userRepository.save(user);
     }

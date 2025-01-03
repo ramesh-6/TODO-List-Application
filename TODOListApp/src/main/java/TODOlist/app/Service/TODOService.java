@@ -27,6 +27,8 @@ public interface TODOService {
 
     Task getTaskById(long id);
 
+    List<Task> getTasksByUserId(long id);
+
     void deleteUser(long id);
 
     void deleteTask(long id);

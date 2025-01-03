@@ -13,13 +13,17 @@ html, body {
 }
 
 #root {
-    height: 100%;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* height: 100%;
+    width: 100%; */
 }
 
 .container {
-    height: 100%;
-    width: 100%;
+    flex: 1;
+    /* height: 100vh; */
+    width: 100vw;
     max-width: 600px;
     margin: 0 auto;
     display: flex;
@@ -28,12 +32,18 @@ html, body {
     justify-content: flex-start;
     padding: 1rem;
     gap: 2rem;
+    overflow-y: auto;
 }
 
 .title {
+    position: sticky;
+    background-color: #0d0d0d;
+    top: 0;
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
     font-size: 2rem;
     font-weight: 900;
     gap: 0.5rem;
@@ -87,6 +97,11 @@ html, body {
     border-radius: 5px;
     font-size: 1.1rem;
     text-align: center;
+    font-size: 12px;
+    font-family:Verdana;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
 }
 
 ::placeholder {
@@ -136,6 +151,7 @@ html, body {
 
 .taskCheckbox{
     transform: scale(1.35);
+    background-color: #1777ff;
 }
 
 .taskButtonDiv{
@@ -187,6 +203,21 @@ html, body {
     color: #fff;
     font-size: 0.9rem;
     cursor: pointer;
+}
+
+.footer{
+    /* position: relative; */
+    margin-top: auto;
+    /* bottom: 0; */
+    background-color: #0d0d0d;
+    width:100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    text-align: center;
+    font-size: 12px;
+    font-family:Verdana;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
 @media (max-width: 600px) {

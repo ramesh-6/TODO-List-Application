@@ -2,7 +2,7 @@ import React from "react";
 import {} from "../App.css";
 import { CheckSquareTwoTone } from "@ant-design/icons";
 
-function TaskTitle() {
+function Header() {
   return (
     <div className="title">
       <CheckSquareTwoTone />
@@ -11,4 +11,4 @@ function TaskTitle() {
   );
 }
 
-export default TaskTitle;
+export default Header;

@@ -1,41 +1,18 @@
 import { React, useContext, useEffect, useState } from "react";
-import { taskContext } from "../Contexts/TaskContext";
-import { useTasks } from "../Hooks/TaskHooks";
-import {} from "../App.css";
+import { taskContext } from "../../Contexts/TaskContext";
+import { useTasks } from "../../Hooks/TaskHooks";
+import {} from "../../App.css";
 import { DeleteFilled, SaveFilled, EditFilled } from "@ant-design/icons";
 
 export default function TaskRow() {
   const [active, setActive] = useState();
-  const { tasks, setTasks } = useContext(taskContext);
-  const { removeTask, editTask } = useTasks();
+  const { tasks } = useContext(taskContext);
+  const { toggleCheckbox, removeTask, editTask } = useTasks();
 
   useEffect(() => {
     console.log("Task state:", tasks);
     console.log("Active state:", active);
   }, [tasks, active]);
-
-  function toggleTask(index) {
-    const updatedChecked = tasks.map((task) =>
-      task.id === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedChecked);
-  }
-
-  function toggleUpdate(index, taskValue) {
-    setActive({ id: index, title: taskValue });
-  }
-
-  function handleEditInputChange(index, value) {
-    setActive({ id: index, title: value });
-  }
-
-  function updateTask(taskID) {
-    editTask(taskID, active, setActive);
-  }
-
-  function deleteTask(taskID) {
-    removeTask(taskID);
-  }
 
   return (
     <div className="taskRow">
@@ -45,7 +22,7 @@ export default function TaskRow() {
             type="checkbox"
             className="taskCheckbox"
             checked={task.completed}
-            onChange={() => toggleTask(task.id)}
+            onChange={() => toggleCheckbox(task.id)}
           />
           {task && task.id !== active?.id ? (
             <>
@@ -53,13 +30,13 @@ export default function TaskRow() {
               <div className="taskButtonDiv">
                 <button
                   className="taskButton"
-                  onClick={() => toggleUpdate(task.id, task.title)}
+                  onClick={() => setActive({ id: task.id, title: task.title })}
                 >
                   <EditFilled />
                 </button>
                 <button
                   className="taskButton"
-                  onClick={() => deleteTask(task.id)}
+                  onClick={() => removeTask(task.id)}
                 >
                   <DeleteFilled />
                 </button>
@@ -70,11 +47,12 @@ export default function TaskRow() {
               <input
                 className="taskUpdateInput"
                 value={active.title || ""}
-                onChange={(e) => handleEditInputChange(task.id, e.target.value)}
+                onKeyDown={(e) => (e.key === "Enter" ? editTask(task.id, active, setActive) : "")}
+                onChange={(e) => setActive({ id: task.id, title:  e.target.value })}
               />
               <button
                 className="taskUpdateSaveButton"
-                onClick={() => updateTask(task.id)}
+                onClick={() => editTask(task.id, active, setActive)}
               >
                 <SaveFilled />
               </button>
