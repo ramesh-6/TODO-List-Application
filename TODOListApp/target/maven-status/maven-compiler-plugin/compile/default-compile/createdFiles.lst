@@ -1,11 +1,12 @@
-TODOlist\app\Service\TODOService.class
-TODOlist\app\Service\TODOServiceImpl.class
-TODOlist\app\package-info.class
 TODOlist\app\Repository\TaskRepository.class
 TODOlist\app\Entity\Task.class
 TODOlist\app\Exception\UserNotFoundException.class
-TODOlist\app\Repository\UserRepository.class
 TODOlist\app\Entity\User.class
+TODOlist\app\Controller\Controller.class
+TODOlist\app\Config\WebConfig.class
+TODOlist\app\Service\TODOService.class
+TODOlist\app\Service\TODOServiceImpl.class
+TODOlist\app\package-info.class
+TODOlist\app\Repository\UserRepository.class
 TODOlist\app\Main.class
 TODOlist\app\Config\OpenAPIConfig.class
-TODOlist\app\Controller\Controller.class

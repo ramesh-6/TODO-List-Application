@@ -2,10 +2,12 @@ package TODOlist.app.Service;
 
 import TODOlist.app.Entity.Task;
 import TODOlist.app.Entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface TODOService {
+public interface TODOService extends UserDetailsService {
 
     User createUser(User user);
 
@@ -33,4 +35,5 @@ public interface TODOService {
 
     void deleteTask(long id);
 
+    UserDetails loadUserByUsername(String username);
 }

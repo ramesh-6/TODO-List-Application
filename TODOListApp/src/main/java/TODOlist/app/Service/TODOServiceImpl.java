@@ -2,10 +2,13 @@ package TODOlist.app.Service;
 
 import TODOlist.app.Entity.Task;
 import TODOlist.app.Entity.User;
+import TODOlist.app.Entity.UserPrincipal;
 import TODOlist.app.Exception.UserNotFoundException;
 import TODOlist.app.Repository.TaskRepository;
 import TODOlist.app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,7 @@ public class TODOServiceImpl implements TODOService {
     public List<Task> getAllTask() {
         return this.taskRepository.findAll();
     }
+
     @Override
     public User getUserById(long UserId) {
         Optional<User> userDB = this.userRepository.findById(UserId);
@@ -137,4 +141,16 @@ public class TODOServiceImpl implements TODOService {
             throw new UserNotFoundException("Record not found with id : " + taskId);
         }
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            System.out.println("User Not Found");
+            throw new UsernameNotFoundException("user not found");
+        }
+
+        return new UserPrincipal(user);
+    }
+
 }
