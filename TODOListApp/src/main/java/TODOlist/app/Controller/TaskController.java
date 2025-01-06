@@ -14,41 +14,41 @@ public class TaskController {
     @Autowired
     private TaskService TaskService;
 
-    @GetMapping("/Tasks")
+    @GetMapping("/tasks")
     public List<Task> getAllTasks() {
         return TaskService.getAllTask();
     }
 
-    @GetMapping("/Task/{id}")
+    @GetMapping("/task/{id}")
     public Task getTaskById(@PathVariable("id") long id) {
         return TaskService.getTaskById(id);
     }
 
-    @GetMapping("/Tasks/{id}")
+    @GetMapping("/tasks/{id}")
     public List<Task> getTasksById(@PathVariable("id") long id) {
         return TaskService.getTasksByUserId(id);
     }
 
-    @PostMapping("/Task")
+    @PostMapping("/task")
     @ResponseStatus(HttpStatus.CREATED)
     public Task createTask(@RequestBody Task task) {
         return this.TaskService.createTask(task);
     }
 
-    @PostMapping("/Tasks")
+    @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public List<Task> createTask(@RequestBody List<Task> tasks) {
         return this.TaskService.createTasks(tasks);
     }
 
-    @PutMapping("/Task/{id}")
+    @PutMapping("/task/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Task updateTask(@PathVariable("id") long id, @RequestBody Task task) {
         task.setId(id);
         return this.TaskService.updateTask(task);
     }
 
-    @DeleteMapping("/Task/{id}")
+    @DeleteMapping("/task/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteTask(@PathVariable("id") long id) {
         this.TaskService.deleteTask(id);

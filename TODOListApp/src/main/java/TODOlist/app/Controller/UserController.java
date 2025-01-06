@@ -14,36 +14,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/Users")
+    @GetMapping("/users")
     public List<User> getAllUser() {
         return userService.getAllUser();
     }
 
-    @GetMapping("/User/{id}")
+    @GetMapping("/user/{id}")
     public User getUserById(@PathVariable("id") long id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/User")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody User user) {
         return this.userService.createUser(user);
     }
 
-    @PostMapping("/Users")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public List<User> createUsers(@RequestBody List<User> users) {
         return this.userService.createUsers(users);
     }
 
-    @PutMapping("/User/{id}")
+    @PutMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@PathVariable long id, @RequestBody User user) {
         user.setId(id);
         return this.userService.updateUser(user);
     }
 
-    @DeleteMapping("/User/{id}")
+    @DeleteMapping("/user/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable("id") long id) {
         this.userService.deleteUser(id);
