@@ -1,38 +1,30 @@
 package TODOlist.app.Service;
 
-import TODOlist.app.Entity.Task;
 import TODOlist.app.Entity.User;
 import TODOlist.app.Entity.UserPrincipal;
 import TODOlist.app.Exception.UserNotFoundException;
-import TODOlist.app.Repository.TaskRepository;
 import TODOlist.app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-public class TODOServiceImpl implements TODOService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     @Override
     public List<User> getAllUser() {
         return this.userRepository.findAll();
     }
 
-    public List<Task> getAllTask() {
-        return this.taskRepository.findAll();
-    }
 
     @Override
     public User getUserById(long UserId) {
@@ -46,46 +38,13 @@ public class TODOServiceImpl implements TODOService {
     }
 
     @Override
-    public Task getTaskById(long taskID) {
-        Optional<Task> taskDB = this.taskRepository.findById(taskID);
-
-        if (taskDB.isPresent()) {
-            return taskDB.get();
-        } else {
-            throw new UserNotFoundException("Record not found with id : " + taskID);
-        }
-    }
-
-    @Override
-    public List<Task> getTasksByUserId(long userId) {
-        Optional<User> userDB = this.userRepository.findById(userId);
-        List<Task> taskDB = this.taskRepository.findTasksByUser(userDB);
-
-        if (userDB.isPresent()) {
-            return taskDB;
-        } else {
-            throw new UserNotFoundException("User not found with id : " + userId);
-        }
-    }
-
-    @Override
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-    }
-
-    @Override
     public List<User> createUsers(List<User> users) {
         return userRepository.saveAll(users);
-    }
-
-    @Override
-    public List<Task> createTasks(List<Task> tasks) {
-        return taskRepository.saveAll(tasks);
     }
 
     @Override
@@ -105,22 +64,6 @@ public class TODOServiceImpl implements TODOService {
     }
 
     @Override
-    public Task updateTask(Task task) {
-        Optional<Task> taskDB = this.taskRepository.findById(task.getId());
-        if (taskDB.isPresent()) {
-            Task taskUpdate = taskDB.get();
-            taskUpdate.setId(task.getId());
-            taskUpdate.setTitle(task.getTitle());
-            taskUpdate.setCompleted(task.getCompleted());
-            taskUpdate.setUser(task.getUser());
-            taskRepository.save(taskUpdate);
-            return taskUpdate;
-        } else {
-            throw new UserNotFoundException("Record not found with id : " + task.getId());
-        }
-    }
-
-    @Override
     public void deleteUser(long userId) {
         Optional<User> userDB = this.userRepository.findById(userId);
 
@@ -128,17 +71,6 @@ public class TODOServiceImpl implements TODOService {
             this.userRepository.delete(userDB.get());
         } else {
             throw new UserNotFoundException("Record not found with id : " + userId);
-        }
-    }
-
-    @Override
-    public void deleteTask(long taskId) {
-        Optional<Task> taskDB = this.taskRepository.findById(taskId);
-
-        if (taskDB.isPresent()) {
-            this.taskRepository.delete(taskDB.get());
-        } else {
-            throw new UserNotFoundException("Record not found with id : " + taskId);
         }
     }
 
@@ -154,3 +86,4 @@ public class TODOServiceImpl implements TODOService {
     }
 
 }
+
