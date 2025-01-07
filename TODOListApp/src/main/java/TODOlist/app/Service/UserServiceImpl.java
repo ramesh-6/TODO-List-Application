@@ -7,6 +7,7 @@ import TODOlist.app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     @Override
     public List<User> getAllUser() {
         return this.userRepository.findAll();
@@ -29,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(long UserId) {
         Optional<User> userDB = this.userRepository.findById(UserId);
-
         if (userDB.isPresent()) {
             return userDB.get();
         } else {
@@ -39,7 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -66,7 +70,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(long userId) {
         Optional<User> userDB = this.userRepository.findById(userId);
-
         if (userDB.isPresent()) {
             this.userRepository.delete(userDB.get());
         } else {
@@ -81,9 +84,7 @@ public class UserServiceImpl implements UserService {
             System.out.println("User Not Found");
             throw new UsernameNotFoundException("user not found");
         }
-
         return new UserPrincipal(user);
     }
-
 }
 
