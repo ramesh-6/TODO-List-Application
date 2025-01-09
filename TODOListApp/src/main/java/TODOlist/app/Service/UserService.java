@@ -22,5 +22,6 @@ public interface UserService extends UserDetailsService {
 
     UserDetails loadUserByUsername(String username);
 
+    String verify(User user);
 }
 

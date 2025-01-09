@@ -5,6 +5,10 @@ import TODOlist.app.Entity.UserPrincipal;
 import TODOlist.app.Exception.UserNotFoundException;
 import TODOlist.app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Lazy
+    @Autowired
+    AuthenticationManager authManager;
+
+    @Autowired
+    private JwtService jwtService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -85,6 +96,16 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("user not found");
         }
         return new UserPrincipal(user);
+    }
+
+    @Override
+    public String verify(User user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(user.getUsername());
+        } else {
+            return "fail";
+        }
     }
 }
 

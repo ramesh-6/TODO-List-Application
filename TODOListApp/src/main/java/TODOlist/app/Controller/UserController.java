@@ -30,6 +30,11 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return userService.verify(user);
+    }
+
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public List<User> createUsers(@RequestBody List<User> users) {
