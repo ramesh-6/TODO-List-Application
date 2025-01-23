@@ -18,6 +18,8 @@ public interface TaskService {
 
     List<Task> getTasksByUserId(long id);
 
+    List<Task> getTasksByUsername(String username);
+
     void deleteTask(long id);
 
 }

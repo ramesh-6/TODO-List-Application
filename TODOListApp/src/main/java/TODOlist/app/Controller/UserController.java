@@ -19,9 +19,15 @@ public class UserController {
         return userService.getAllUser();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/id/{id}")
     public User getUserById(@PathVariable("id") long id) {
         return userService.getUserById(id);
+    }
+
+
+    @GetMapping("/user/username/{username}")
+    public User getUserByUsername(@PathVariable("username") String username) {
+        return userService.getUserByUsername(username);
     }
 
     @PostMapping("/register")

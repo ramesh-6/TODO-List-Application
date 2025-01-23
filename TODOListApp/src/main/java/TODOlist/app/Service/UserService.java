@@ -18,10 +18,13 @@ public interface UserService extends UserDetailsService {
 
     User getUserById(long id);
 
+    User getUserByUsername(String username);
+
     void deleteUser(long id);
 
     UserDetails loadUserByUsername(String username);
 
     String verify(User user);
+
 }
 

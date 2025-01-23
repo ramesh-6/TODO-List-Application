@@ -24,9 +24,14 @@ public class TaskController {
         return TaskService.getTaskById(id);
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/tasks/id/{id}")
     public List<Task> getTasksById(@PathVariable("id") long id) {
         return TaskService.getTasksByUserId(id);
+    }
+
+    @GetMapping("/tasks/username/{username}")
+    public List<Task> getTasksByUsername(@PathVariable("username") String username) {
+        return TaskService.getTasksByUsername(username);
     }
 
     @PostMapping("/task")

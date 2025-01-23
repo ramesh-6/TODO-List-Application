@@ -40,12 +40,24 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getTasksByUserId(long userId) {
         Optional<User> userDB = this.userRepository.findById(userId);
-        List<Task> taskDB = this.taskRepository.findTasksByUser(userDB);
 
         if (userDB.isPresent()) {
+            List<Task> taskDB = this.taskRepository.findTasksByuser_id(userDB.get().getId());
             return taskDB;
         } else {
             throw new UserNotFoundException("User not found with id : " + userId);
+        }
+    }
+
+    @Override
+    public List<Task> getTasksByUsername(String username) {
+        User user = this.userRepository.findByUsername(username);
+
+        if (user != null) {
+            List<Task> taskDB = this.taskRepository.findTasksByuser_id(user.getId());
+            return taskDB;
+        } else {
+            throw new UserNotFoundException("User not found with username : " + username);
         }
     }
 

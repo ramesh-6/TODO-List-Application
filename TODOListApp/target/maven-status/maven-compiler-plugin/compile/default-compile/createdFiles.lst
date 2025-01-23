@@ -11,6 +11,7 @@ TODOlist\app\Config\WebConfig.class
 TODOlist\app\package-info.class
 TODOlist\app\Service\TaskService.class
 TODOlist\app\Service\UserServiceImpl.class
+TODOlist\app\Config\JwtFilter.class
 TODOlist\app\Repository\UserRepository.class
 TODOlist\app\Main.class
 TODOlist\app\Config\OpenAPIConfig.class

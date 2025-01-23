@@ -19,18 +19,20 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private String secretkey = "";
+    private String secretkey = "ZA55GNm4rq3txxCKFFeFik7Sfr33nL55nXNAO7pTzTU=";
+    long expirationTimeInSeconds = 60 * 30;
 
-    public JwtService() {
-
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGen.generateKey();
-            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    creates a random secretkey
+//    public JwtService() {
+//
+//        try {
+//            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+//            SecretKey sk = keyGen.generateKey();
+//            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -39,7 +41,7 @@ public class JwtService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+                .expiration(new Date(System.currentTimeMillis() + expirationTimeInSeconds * 1000))
                 .and()
                 .signWith(getKey())
                 .compact();

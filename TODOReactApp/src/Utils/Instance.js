@@ -8,4 +8,20 @@ const instance = axios.create({
     }
 })
 
+instance.interceptors.request.use(
+    config => {
+        const token = sessionStorage.getItem('jwtToken');
+        const excludedEndpoints = ["/login", "/register"];
+        
+        if (token && !excludedEndpoints.some(endpoint => config.url.includes(endpoint))) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+
 export default instance;
