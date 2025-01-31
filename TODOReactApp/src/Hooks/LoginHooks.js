@@ -3,6 +3,7 @@ import { authContext } from "../Contexts/AuthContext";
 import { loginService } from "../Service/LoginServices";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import Task from "../Components/TaskPage/Task";
 
 export function useLogin() {
   const { username, password } = useContext(authContext);
@@ -25,6 +26,7 @@ export function useLogin() {
           console.log(decodedToken);
         }
         navigate("/tasks");
+        // return <Task/>;
       } else {
         console.error("No token returned from login service.");
       }

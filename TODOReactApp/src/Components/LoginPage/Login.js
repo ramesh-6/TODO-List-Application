@@ -1,6 +1,7 @@
 import { React, useContext } from "react";
 import { authContext } from "../../Contexts/AuthContext";
 import { useLogin } from "../../Hooks/LoginHooks";
+import "./Login.css";
 
 function Login() {
   const { username, setUsername, password, setPassword } =
@@ -26,7 +27,7 @@ function Login() {
           onKeyDown={(e) => (e.key === "Enter" ? login() : "")}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="forgotButton" onclick="forgotPass()">
+        <button className="forgotButton" onClick="forgotPass()">
           Forgot?
         </button>
         {/* <button className="forgotButton" onClick={() => setActive({ id: task.id, title: task.title })}>Forgot?</button> */}

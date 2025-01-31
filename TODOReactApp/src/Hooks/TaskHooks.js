@@ -13,46 +13,25 @@ import { jwtDecode } from "jwt-decode";
 
 export function useTasks() {
   const { tasks, setTasks } = useContext(taskContext);
-  const [user, setUser] = useState(null);
+  const token = sessionStorage.getItem("jwtToken");
+  const decodedToken = jwtDecode(token);
+  const user = { username: decodedToken.username, id: decodedToken.userId };
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("jwtToken");
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const username = decodedToken.sub;
-
-        async function loadUserByUsername() {
-          try {
-            const fetchedUser = await getUserByUsername(username);
-            setUser(fetchedUser);
-          } catch (err) {
-            console.error("Error fetching user:", err);
-            setError(err);
-          }
-        }
-        loadUserByUsername();
-      } catch (err) {
-        console.error("Error decoding token:", err);
-        setError(err);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (user) {
-      (async function fetchTasks() {
+      async function fetchTasks() {
         try {
-          const taskData = await getTasksByUsername(user.username);
+          const taskData = await getTasksByUserID(user.id);
           setTasks(taskData);
         } catch (err) {
           console.error("Error fetching tasks:", err);
           setError(err);
         }
-      })();
+      }
+      fetchTasks();
     }
-  }, [user]);
+  }, [token]);
 
   async function postTask(input, setInput) {
     try {

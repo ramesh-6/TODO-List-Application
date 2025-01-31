@@ -108,7 +108,9 @@ public class UserServiceImpl implements UserService {
     public String verify(User user) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            User authenticatedUser = userRepository.findByUsername(user.getUsername());
+            System.out.println("Authenticated username: " + authenticatedUser.getUsername() + " id: " + authenticatedUser.getId());
+            return jwtService.generateToken(authenticatedUser.getUsername(), authenticatedUser.getId());
         } else {
             return "fail";
         }
