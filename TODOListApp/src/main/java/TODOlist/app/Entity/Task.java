@@ -14,6 +14,12 @@ public class Task {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private Boolean completed = false;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Task() {
     }
@@ -24,13 +30,6 @@ public class Task {
         this.completed = completed;
         this.user = user;
     }
-
-    @Column(nullable = false)
-    private Boolean completed = false;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     public Long getId() {
         return id;

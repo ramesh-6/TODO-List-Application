@@ -1,0 +1,150 @@
+.signupContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 440px;
+    padding: 2rem;
+    background: #0d0d0d;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(23, 119, 255, 0.2);
+    margin: auto;
+    gap: 1.5rem;
+}
+
+.logo {
+    width: 120px;
+    height: 60px;
+    background: #1777ff;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.signupTitle {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #1777ff;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.usernameInput,
+.emailInput {
+    width: 100%;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.passwordInput {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    height: 48px;
+}
+
+.confirmPasswordInput {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    height: 48px;
+}
+
+.usernameInput,
+.emailInput,
+.passwordInput,
+.confirmPasswordInput {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.usernameInput input,
+.emailInput input,
+.passwordInput input,
+.confirmPasswordInput input {
+    width: 100%;
+    padding: 0.75rem 85px 0.75rem 1rem;
+    padding-right: 10px;
+    margin-left: auto;
+    background: #fff;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    color: #000000;
+    font-family: Verdana;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+    text-align: left;
+    height: 48px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.usernameInput input::placeholder,
+.emailInput input::placeholder,
+.passwordInput input::placeholder,
+.confirmPasswordInput input::placeholder {
+    color: #999;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.signupButton {
+    width: 100%;
+    padding: 0.75rem;
+    background: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-family: Verdana;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signupButton:hover {
+    background: #155fcb;
+}
+
+.logininSignup {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+    font-family: Verdana;
+    letter-spacing: 0.2px;
+}
+
+.logininSignupButton {
+    background: none;
+    border: none;
+    color: #1777ff;
+    font-weight: 600;
+    cursor: pointer;
+    padding-left: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .signupContainer {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .signupTitle {
+        font-size: 1.75rem;
+    }
+
+    .usernameInput input,
+    .passwordInput input,
+    .confirmPasswordInput input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .signupButton {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+}

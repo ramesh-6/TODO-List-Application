@@ -8,3 +8,12 @@ export const loginService = async (user) => {
     throw new Error(e);
   }
 };
+
+export const signupservice = async (user) => {
+  try {
+    const response = await instance.post("/register", user);
+    return response.data;
+  } catch (e) {
+    throw new Error(e);
+  }
+};

@@ -55,7 +55,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 0 5px;
+    padding: 0 5px 8px;
     margin: 0;
     height: 100%;
     display: flex;
@@ -63,10 +63,19 @@
     z-index: 2;
 }
 
+.usernameInput,
+.passwordInput {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 .usernameInput input, 
 .passwordInput input {
     width: 100%;
     padding: 0.75rem 85px 0.75rem 1rem;
+    padding-right: 10px;
+    margin-left: auto;
     background: #fff;
     border: 2px solid #1777ff;
     border-radius: 5px;
@@ -82,7 +91,7 @@
 
 .usernameInput input::placeholder,
 .passwordInput input::placeholder {
-    color: #666;
+    color: #999;
     font-weight: 600;
     letter-spacing: 0.3px;
 }
@@ -106,7 +115,7 @@
     background: #155fcb;
 }
 
-.signup {
+.signupinLogin {
     font-size: 0.9rem;
     color: #888;
     text-align: center;
@@ -114,7 +123,7 @@
     letter-spacing: 0.2px;
 }
 
-.signupButton {
+.signupinLoginButton {
     background: none;
     border: none;
     color: #1777ff;
