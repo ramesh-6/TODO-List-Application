@@ -1,0 +1,54 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: cloud-gateway
+
+  main:
+    web-application-type: reactive
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - name: JwtAuthFilter
+
+        - id: task-service
+          uri: lb://task-service
+          predicates:
+            - Path=/task-service/**
+          filters:
+            - name: JwtAuthFilter
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

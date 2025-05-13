@@ -12,6 +12,7 @@ import taskService.Service.Service;
 import java.util.List;
 
 @RestController
+@RequestMapping("/task-service")
 public class TaskController {
 
     @Autowired

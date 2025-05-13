@@ -12,6 +12,7 @@ import userService.Service.UserService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user-service")
 public class UserController {
 
     @Autowired
@@ -32,13 +33,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/Users/{id}")
+    @GetMapping("/Users/id/{id}")
     public ResponseEntity<Boolean> isValidUser(@PathVariable long id) {
         logger.info("Received Request to validate user by ID: {}",id);
         return ResponseEntity.ok(userService.isValidUser(id));
     }
 
-    @GetMapping("/User/{username}")
+    @GetMapping("/User/username/{username}")
     public ResponseEntity<UserDTO> findByUsername(@PathVariable String username){
         logger.info("Received Request to find user by username: {}",username);
         return ResponseEntity.ok(userService.findByUsername(username));

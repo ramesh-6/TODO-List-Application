@@ -3,31 +3,41 @@ package userService.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import userService.DTO.UserDTO;
 import userService.DTO.UserMapper;
 import userService.Entity.User;
+import userService.Exception.UserAlreadyExistException;
 import userService.Exception.UserNotFoundException;
 import userService.Repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-@org.springframework.stereotype.Service
+@Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         logger.info("Creating user: {}",userDTO);
-        User user = UserMapper.convertToEntity(userDTO);
-        return UserMapper.convertToDTO(userRepository.save(user));
+        Optional<User> existingUser = userRepository.findByUsername(userDTO.getUsername());
+        if (!existingUser.isPresent()) {
+            User user = UserMapper.convertToEntity(userDTO);
+            user.setPassword(encoder.encode(user.getPassword()));
+            return UserMapper.convertToDTO(userRepository.save(user));
+        } else {
+            throw new UserAlreadyExistException("User already exists");
+        }
     }
 
     @Override
@@ -98,12 +108,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUsername(String username) {
         logger.info("Getting user by username: {}",username);
-        Optional<User> userDB = userRepository.findByUsername(username);
+        Optional<User> existingUser = userRepository.findByUsername(username);
 
-        if (userDB.isPresent()) {
-            return UserMapper.convertToDTO(userDB.get());
+        if (existingUser.isPresent()) {
+            return UserMapper.convertToDTO(existingUser.get());
         } else {
-            throw new UserNotFoundException(userDB.get().getId());
+            throw new UserNotFoundException(username);
         }
     }
 }
