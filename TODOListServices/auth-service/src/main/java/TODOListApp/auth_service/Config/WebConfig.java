@@ -1,6 +1,8 @@
 package TODOListApp.auth_service.Config;
 
 import TODOListApp.auth_service.Service.UserDetailServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +26,11 @@ public class WebConfig{
     @Autowired
     private UserDetailServiceImpl userDetailsService;
 
+    private static final Logger logger = LoggerFactory.getLogger(WebConfig.class);
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        logger.info("Configuring SecurityFilterChain...");
         return http
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
@@ -39,19 +44,16 @@ public class WebConfig{
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+        logger.info("Creating DaoAuthenticationProvider bean...");
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         return provider;
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager();
-//    }
-
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        logger.info("Creating AuthenticationManager bean...");
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .authenticationProvider(authenticationProvider())
                 .build();

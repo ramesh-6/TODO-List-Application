@@ -20,18 +20,20 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         logger.info("Creating user: {}",userDTO);
         Optional<User> existingUser = userRepository.findByUsername(userDTO.getUsername());
-        if (!existingUser.isPresent()) {
+        if (existingUser.isEmpty()) {
             User user = UserMapper.convertToEntity(userDTO);
             user.setPassword(encoder.encode(user.getPassword()));
             return UserMapper.convertToDTO(userRepository.save(user));

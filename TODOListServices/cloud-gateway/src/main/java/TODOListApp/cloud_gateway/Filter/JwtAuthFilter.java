@@ -1,55 +1,58 @@
 package TODOListApp.cloud_gateway.Filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
 
-    public JwtAuthFilter() {
+    private final WebClient.Builder webClientBuilder;
+
+    @Autowired
+    public JwtAuthFilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
+        this.webClientBuilder = webClientBuilder;
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
+            logger.debug("Incoming request: {}", exchange.getRequest().getURI());
 
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                logger.warn("Missing or invalid Authorization header");
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
 
-            try {
-                HttpHeaders headers = new HttpHeaders();
-                headers.set("Authorization", authHeader);
-                HttpEntity<String> entity = new HttpEntity<>(headers);
+            String token = authHeader;
 
-                ResponseEntity<String> response = restTemplate.exchange(
-                        "http://localhost:8082/auth/validate/header",
-                        HttpMethod.POST,
-                        entity,
-                        String.class
-                );
-
-                if (response.getStatusCode().is2xxSuccessful()) {
-                    return chain.filter(exchange);
-                } else {
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return exchange.getResponse().setComplete();
-                }
-            } catch (Exception e) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
-            }
+            return webClientBuilder.build()
+                    .post()
+                    .uri("lb://auth-service/auth/validate/header")
+                    .header("Authorization", token)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .flatMap(response -> {
+                        logger.info("Token validated successfully");
+                        return chain.filter(exchange);
+                    })
+                    .onErrorResume(ex -> {
+                        logger.error("Exception during token validation: {}", ex.getMessage(), ex);
+                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                        return exchange.getResponse().setComplete();
+                    });
         };
     }
 
-    public static class Config {
-    }
+    public static class Config {}
 }

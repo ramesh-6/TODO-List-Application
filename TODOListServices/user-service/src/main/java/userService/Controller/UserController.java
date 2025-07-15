@@ -15,10 +15,13 @@ import java.util.List;
 @RequestMapping("/user-service")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
+    private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    public UserController (UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/Users")
     public ResponseEntity<List<UserDTO>> getAllUser() {

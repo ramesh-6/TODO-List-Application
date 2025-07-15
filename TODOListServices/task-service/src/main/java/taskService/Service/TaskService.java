@@ -4,7 +4,7 @@ import taskService.DTO.TaskDTO;
 
 import java.util.List;
 
-public interface Service {
+public interface TaskService {
 
     TaskDTO createTask(TaskDTO taskDTO);
 

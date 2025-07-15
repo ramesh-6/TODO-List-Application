@@ -33,6 +33,7 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        logger.info("Received Request to create user in AuthController");
         ResponseEntity<User> res = userServiceClient.createUser(user);
         System.out.println(res);
         return res;
@@ -40,11 +41,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
+        logger.info("Received Request to login");
         return ResponseEntity.ok(userDetailServiceImpl.verify(user));
     }
 
     @PostMapping("/validate")
     public ResponseEntity<?> validateToken(@RequestBody String token) {
+        logger.info("Received Request to validate");
         try {
             String username = jwtService.extractUserName(token);
             Long userId = jwtService.extractUserId(token);
@@ -67,15 +70,18 @@ public class AuthController {
 
     @PostMapping("/validate/header")
     public ResponseEntity<?> validateTokenbyHeader(@RequestHeader("Authorization") String authHeader) {
+        logger.info("Received Request to validate header");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
+        logger.info("Auth header received: {}", authHeader);
         String token = authHeader.substring(7);
+        logger.info("Token after strip: {}", token);
         try {
             jwtService.validateAndExtract(token);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            logger.error("Token validation failed: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }

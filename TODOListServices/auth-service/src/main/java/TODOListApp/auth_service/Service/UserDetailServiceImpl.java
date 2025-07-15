@@ -3,6 +3,8 @@ package TODOListApp.auth_service.Service;
 import TODOListApp.auth_service.Client.UserServiceClient;
 import TODOListApp.auth_service.Entity.User;
 import TODOListApp.auth_service.Entity.UserPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +28,11 @@ public class UserDetailServiceImpl implements UserDetailService {
     @Autowired
     UserServiceClient userServiceClient;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailServiceImpl.class);
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("Loading user by username: {}",username);
         try {
             ResponseEntity<User> res = userServiceClient.findByUsername(username);
             User user = res.getBody();
@@ -42,6 +47,7 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
     public String verify(User user) {
+        logger.info("Verifying user");
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
             ResponseEntity<User> res = userServiceClient.findByUsername(user.getUsername());

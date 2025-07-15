@@ -1,4 +1,4 @@
-package taskService.Config;//package TODOlist.app.Config;
+//package taskService.Config;
 //
 //import io.swagger.v3.oas.models.OpenAPI;
 //import io.swagger.v3.oas.models.info.Info;
