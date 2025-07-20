@@ -40,7 +40,7 @@ export const addTask = async (task) => {
     throw new Error(e);
   }
 };
-export const updateTasks = async (taskID, task) => {
+export const updateTask = async (taskID, task) => {
   try {
     const response = await instance.put("/task/" + taskID, task);
     return response.data;

@@ -1,14 +1,17 @@
-import { React, useContext } from "react";
+import { React, useContext, useEffect } from "react";
 import { authContext } from "../../Contexts/AuthContext";
 import { useLogin } from "../../Hooks/LoginHooks";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { username, setUsername, password, setPassword } =
-    useContext(authContext);
+  const { username, setUsername, password, setPassword } = useContext(authContext);
   const { login } = useLogin();
   const navigate = useNavigate();
+  useEffect(() => {
+  setUsername("");
+  setPassword("");
+  }, []);
   return (
     <div className="loginContainer">
       <div className="loginTitle">LOGIN</div>
@@ -29,10 +32,6 @@ function Login() {
           onKeyDown={(e) => (e.key === "Enter" ? login() : "")}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="forgotButton" onClick="forgotPass()">
-          Forgot?
-        </button>
-        {/* <button className="forgotButton" onClick={() => setActive({ id: task.id, title: task.title })}>Forgot?</button> */}
       </div>
       <button className="loginButton" onClick={() => login()}>
         LOGIN

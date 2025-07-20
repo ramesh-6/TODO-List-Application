@@ -38,14 +38,14 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user-service/**
+            - Path=/user/**, /users/**
           filters:
             - name: JwtAuthFilter
 
         - id: task-service
           uri: lb://task-service
           predicates:
-            - Path=/task-service/**
+            - Path=/task/**, /tasks/**
           filters:
             - name: JwtAuthFilter
 

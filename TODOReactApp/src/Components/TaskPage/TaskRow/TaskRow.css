@@ -1,0 +1,119 @@
+
+.taskRow {
+    width: 100%;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.task {
+    width: 100%;
+    min-height: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family:Verdana;
+    letter-spacing: 0.2px;
+}
+
+.taskCheckbox{
+    transform: scale(1.35);
+    accent-color: #1777ff;
+    cursor: pointer;
+}
+
+.taskContent, .taskUpdateDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.taskTextWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.taskTitle {
+    width: 25%;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-left: 2rem;
+}
+
+.taskDescription {
+    font-size: 0.9rem;
+    color: #777;
+    word-break: break-word;
+    flex-grow: 1;
+}
+
+.taskTitleInput {
+    width: 25%;
+    margin-left: 1.5rem;
+    font-family: Verdana;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid #1777ff;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.taskDescriptionTextarea {
+    flex-grow: 1;
+    padding: 0.5rem;
+    margin-left: -0.7rem;
+    font-family: Verdana;
+    font-size: 0.9rem;
+    border: 2px solid #1777ff;
+    border-radius: 5px;
+    color: #777;
+    resize: none;
+    height: 2.5rem;
+}
+
+.taskButtonDiv, .taskUpdateSaveButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.taskButton {
+    padding: 0.5rem;
+    background-color: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.taskUpdateSaveButton{
+    padding: 0.5rem;
+    background-color: #1777ff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+@media (max-width: 550px) {
+    .taskRow {
+        max-width: 90%;
+    }
+}

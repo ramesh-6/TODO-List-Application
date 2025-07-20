@@ -13,6 +13,13 @@
     gap: 1.5rem;
 }
 
+.signupContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
 .logo {
     width: 120px;
     height: 60px;

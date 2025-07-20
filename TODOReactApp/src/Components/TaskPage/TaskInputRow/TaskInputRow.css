@@ -1,0 +1,55 @@
+.inputRow {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid #1777ff;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-family: Verdana;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+}
+
+.titleInput {
+  flex: 1;
+  min-width: 150px;
+}
+
+.descInput {
+  flex: 2;
+  min-width: 200px;
+}
+
+.inputButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  background-color: #1777ff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .inputRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .titleInput,
+  .descInput,
+  .inputButton {
+    width: 100%;
+  }
+}

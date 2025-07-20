@@ -1,10 +1,10 @@
 import React from "react";
-import {} from "../App.css";
+import {} from "./Header.css";
 import { CheckSquareTwoTone } from "@ant-design/icons";
 
 function Header() {
   return (
-    <div className="title">
+    <div className="Header">
       <CheckSquareTwoTone />
       TODO
     </div>

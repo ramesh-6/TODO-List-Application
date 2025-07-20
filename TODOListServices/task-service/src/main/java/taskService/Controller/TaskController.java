@@ -1,5 +1,6 @@
 package taskService.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import taskService.DTO.TaskDTO;
 import taskService.Service.TaskService;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task-service")
 public class TaskController {
 
     private final TaskService taskService;
@@ -23,40 +24,40 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/Tasks")
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
+    @GetMapping("/tasks")
+    public ResponseEntity<List<TaskDTO>> getAllTasks(HttpServletRequest request) {
         logger.info("Received Request to get all tasks");
         return ResponseEntity.ok(taskService.getAllTask());
     }
 
 
-    @GetMapping("/Task/{id}")
+    @GetMapping("/task/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable long id) {
         logger.info("Received Request to get task by ID: {}",id);
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
-    @GetMapping("/Tasks/{id}")
+    @GetMapping("/tasks/id/{id}")
     public ResponseEntity<List<TaskDTO>> getTasksByUserId(@PathVariable long id) {
         logger.info("Received Request to get task by userID: {}",id);
         return ResponseEntity.ok(taskService.getTasksByUserId(id));
     }
 
-    @PostMapping("/Task")
+    @PostMapping("/task")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
         logger.info("Received Request to create task");
         return new ResponseEntity<>(taskService.createTask(taskDTO),HttpStatus.CREATED);
     }
 
-    @PostMapping("/Tasks")
+    @PostMapping("/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<List<TaskDTO>> createTasks(@RequestBody List<TaskDTO> taskDTOS) {
         logger.info("Received Request to create tasks");
         return new ResponseEntity<>(taskService.createTasks(taskDTOS),HttpStatus.CREATED);
     }
 
-    @PutMapping("/Task/{id}")
+    @PutMapping("/task/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TaskDTO> updateTask(@PathVariable long id, @RequestBody TaskDTO taskDTO) {
         logger.info("Received Request to update task by ID and data: {}, {}",id,taskDTO);
@@ -64,7 +65,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.updateTask(taskDTO));
     }
 
-    @DeleteMapping("/Task/{id}")
+    @DeleteMapping("/task/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> deleteTask(@PathVariable long id) {
         logger.info("Received Request to delete task by ID: {}",id);

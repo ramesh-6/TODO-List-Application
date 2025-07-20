@@ -1,6 +1,6 @@
 import { React, useContext, useEffect, useState } from "react";
-import {} from "../../App.css";
-import { taskContext } from "../../Contexts/TaskContext";
+import {} from "./TaskCounter.css";
+import { taskContext } from "../../../Contexts/TaskContext";
 
 function TaskCounter() {
   const { tasks } = useContext(taskContext);
@@ -14,7 +14,7 @@ function TaskCounter() {
         Task Done <br />
         Keep it up
       </div>
-      <div className="no">
+      <div className="counter">
         {totalDone} / {tasks.length}
       </div>
     </div>

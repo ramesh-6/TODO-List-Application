@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name="user-service", path = "/user-service")
+@FeignClient(name="user-service", path = "/")
 public interface UserServiceClient {
-    @GetMapping("Users/{userID}")
+    @GetMapping("user/id/{userID}")
     ResponseEntity<Boolean> isValidUser(@PathVariable("userID") Long userID);
 }

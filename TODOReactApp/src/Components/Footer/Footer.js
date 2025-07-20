@@ -1,10 +1,11 @@
 import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
   return (
     <div>
       <div className="footer">
-        All Rights Reserved 2024 @TODOList
+        All Rights Reserved 2025 @TODOList
       </div>
     </div>
   );

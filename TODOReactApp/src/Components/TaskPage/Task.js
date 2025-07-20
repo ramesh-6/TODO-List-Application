@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import {taskContext} from "../../Contexts/TaskContext";
-import TaskCounter from "../TaskPage/TaskCounter";
-import TaskRow from "../TaskPage//TaskRow";
+import TaskCounter from "./TaskCounter/TaskCounter";
+import TaskRow from "./TaskRow/TaskRow";
 import {} from "../../App.css";
-import TaskInputRow from "../TaskPage//TaskInputRow";
+import TaskInputRow from "./TaskInputRow/TaskInputRow";
 
 function Task() {
   const [tasks, setTasks] = useState([]);

@@ -6,7 +6,7 @@ import {
   getTasksByUserID,
   getTasksByUsername,
   getUserByUsername,
-  updateTasks,
+  updateTask,
 } from "../Service/TaskServices";
 import { taskContext } from "../Contexts/TaskContext";
 import { jwtDecode } from "jwt-decode";
@@ -33,20 +33,22 @@ export function useTasks() {
     }
   }, [token]);
 
-  async function postTask(input, setInput) {
+  async function postTask(title, description, setTitle, setDescription) {
     try {
       const data = [
         ...tasks,
         {
-          title: input,
+          title: title,
+          description: description,
           completed: false,
-          user: user,
+          userID: user.id,
         },
       ];
       const taskData = await addTask(data);
-      console.log("Adding data:", input);
+      console.log("Adding data:", data);
       setTasks(taskData);
-      setInput("");
+      setTitle("");
+      setDescription("");
     } catch (err) {
       console.error("Error fetching tasks:", err);
       setError(err);
@@ -57,7 +59,7 @@ export function useTasks() {
     try {
       const updatedChecked = tasks.find((task) => task.id === taskID);
       updatedChecked.completed = !updatedChecked.completed;
-      const taskData = await updateTasks(taskID, updatedChecked);
+      const taskData = await updateTask(taskID, updatedChecked);
       const taskarr = tasks.map((task) =>
         task.id === taskID ? taskData : task
       );
@@ -72,7 +74,8 @@ export function useTasks() {
     try {
       const updatedTask = tasks.find((task) => task.id === taskID);
       updatedTask.title = active.title;
-      const taskData = await updateTasks(taskID, updatedTask);
+      updatedTask.description = active.description;
+      const taskData = await updateTask(taskID, updatedTask);
       const taskarr = tasks.map((task) =>
         task.id === taskID ? taskData : task
       );

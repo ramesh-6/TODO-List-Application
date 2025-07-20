@@ -1,0 +1,12 @@
+.footer{
+    margin-top: auto;
+    background-color: #0d0d0d;
+    width:100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    text-align: center;
+    font-size: 12px;
+    font-family:Verdana;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}

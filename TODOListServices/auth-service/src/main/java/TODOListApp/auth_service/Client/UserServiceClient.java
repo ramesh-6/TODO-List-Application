@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="user-service", path = "/user-service")
+@FeignClient(name="user-service", path = "/")
 public interface UserServiceClient {
 
 //    @GetMapping("Users/{userID}")
 //    ResponseEntity<Boolean> isValidUser(@PathVariable("userID")Long userID);
 
-    @PostMapping("/User")
+    @PostMapping("/user")
     ResponseEntity<User> createUser(@RequestBody User user);
 
-    @GetMapping("/User/username/{username}")
+    @GetMapping("/user/username/{username}")
     ResponseEntity<User> findByUsername(@PathVariable("username")String username);
 }
