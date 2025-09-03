@@ -1,0 +1,70 @@
+# =========================
+# Server Configuration
+# =========================
+server:
+  port: 8082
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: auth-service
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+# =========================
+# Logging Configuration
+# =========================
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+
+# =========================
+# Feign Configuration
+# =========================
+feign:
+  client:
+    config:
+      cloud-gateway:
+        url: http://localhost:8083
+        loggerLevel: FULL
+      default:
+        loggerLevel: FULL
+        connectTimeout: 5000
+        readTimeout: 5000
+  okhttp:
+    enabled: true
+
+cloud:
+  gateway:
+    uri: http://localhost:8083
+
+# ====================================================
+# Secret key internal authorization via custom headers
+# ====================================================
+gateway:
+  secret: hdsgaf8iouqkjgsdjkjasgd
+
+# =========================
+# JWT Secret Key
+# =========================
+jwt:
+  secret: ZA55GNm4rq3txxCKFFeFik7Sfr33nL55nXNAO7pTzTU=
+  expiration: 1800
+
+# =========================
+# Info Endpoint
+# =========================
+info:
+  app:
+    name: authService
+    description: Handles authentication
