@@ -1,3 +1,6 @@
+# =========================
+# Server Configuration
+# =========================
 server:
   port: 8083
 
@@ -10,6 +13,13 @@ spring:
 
   cloud:
     gateway:
+      # Global filter adds security token header on all outgoing requests via gateway
+      default-filters:
+        - name: AddRequestHeader
+          args:
+            name: X-Request-Token
+            value: ${gateway.secret}
+
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -49,6 +59,28 @@ spring:
           filters:
             - name: JwtAuthFilter
 
+# ====================================================
+# Secret key internal authorization via custom headers
+# ====================================================
+gateway:
+  secret: hdsgaf8iouqkjgsdjkjasgd
+
+# ===========================
+# Eureka Client Configuration
+# ===========================
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
+# =========================
+# Logging Configuration
+# =========================
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
