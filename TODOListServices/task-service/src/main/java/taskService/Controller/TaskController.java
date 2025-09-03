@@ -50,13 +50,6 @@ public class TaskController {
         return new ResponseEntity<>(taskService.createTask(taskDTO),HttpStatus.CREATED);
     }
 
-    @PostMapping("/tasks")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<List<TaskDTO>> createTasks(@RequestBody List<TaskDTO> taskDTOS) {
-        logger.info("Received Request to create tasks");
-        return new ResponseEntity<>(taskService.createTasks(taskDTOS),HttpStatus.CREATED);
-    }
-
     @PutMapping("/task/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TaskDTO> updateTask(@PathVariable long id, @RequestBody TaskDTO taskDTO) {

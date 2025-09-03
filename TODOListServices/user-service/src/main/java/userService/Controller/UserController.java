@@ -53,12 +53,6 @@ public class UserController {
         return new ResponseEntity<>(userService.createUser(userDTO),HttpStatus.CREATED);
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<List<UserDTO>> createUsers(@RequestBody List<UserDTO> userDTOS) {
-        logger.info("Received Request to create users");
-        return new ResponseEntity<>(userService.createUsers(userDTOS),HttpStatus.CREATED);
-    }
-
     @PutMapping("/user/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable long id, @RequestBody UserDTO userDTO) {
         userDTO.setId(id);

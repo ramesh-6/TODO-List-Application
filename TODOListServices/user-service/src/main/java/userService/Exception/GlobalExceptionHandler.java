@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex){
-        logger.warn("User not found: {}", ex.getMessage());
+        logger.error(ex.getMessage());
         ErrorResponse response = new ErrorResponse(
                 ex.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
@@ -26,9 +26,45 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistException ex){
+        logger.error(ex.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(NoUsersFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoUsersFoundException(NoUsersFoundException ex){
+        logger.error(ex.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.NO_CONTENT.value(),
+                HttpStatus.NO_CONTENT.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<ErrorResponse> handleDatabaseException(DatabaseException ex){
+        logger.error(ex.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex){
-        logger.error("Internal server error occurred", ex);
+        logger.error(ex.getMessage());
         ErrorResponse response = new ErrorResponse(
                 "Internal Server Error",
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),

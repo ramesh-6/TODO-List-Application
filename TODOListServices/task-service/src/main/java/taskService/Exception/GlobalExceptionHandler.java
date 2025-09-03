@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
-        logger.warn("User not found: {}", ex.getMessage());
+        logger.error(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 ex.getMessage(),
@@ -28,9 +28,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(TaskAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleTaskAlreadyExistsException(TaskAlreadyExistsException ex) {
+        logger.error(ex.getMessage());
+
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleTaskNotFound(TaskNotFoundException ex) {
-        logger.warn("Task not found: {}", ex.getMessage());
+        logger.error(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 ex.getMessage(),
@@ -43,7 +56,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeignClientException(FeignException ex) {
-        logger.error("Feign client error: Status {} - {}", ex.status(), ex.getMessage());
+        logger.error(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 ex.getMessage(),
@@ -51,12 +64,33 @@ public class GlobalExceptionHandler {
                 ex.contentUTF8(),
                 LocalDateTime.now()
         );
+        if (ex.status() == 404) {
+            response.setMessage("User not found");
+            response.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
+        } else if (ex.status() >= 500) {
+            response.setMessage("User service is currently unavailable");
+            response.setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+        } else {
+            response.setMessage("Invalid request");
+        }
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<ErrorResponse> handleDatabaseException(DatabaseException ex){
+        logger.error(ex.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
-        logger.error("Unhandled exception occurred", ex);
+        logger.error(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 "Internal Server Error",

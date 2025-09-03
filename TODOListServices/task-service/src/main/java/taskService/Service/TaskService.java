@@ -8,8 +8,6 @@ public interface TaskService {
 
     TaskDTO createTask(TaskDTO taskDTO);
 
-    List<TaskDTO> createTasks(List<TaskDTO> taskDTOS);
-
     TaskDTO updateTask(TaskDTO taskDTO);
 
     List<TaskDTO> getAllTask();

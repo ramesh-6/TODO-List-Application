@@ -8,8 +8,6 @@ public interface UserService {
 
     UserDTO createUser(UserDTO userDTO);
 
-    List<UserDTO> createUsers(List<UserDTO> userDTOS);
-
     Boolean isValidUser(Long id);
 
     UserDTO updateUser(UserDTO userDTO);

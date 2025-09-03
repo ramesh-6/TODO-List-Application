@@ -2,6 +2,7 @@ package TODOListApp.auth_service.Service;
 
 import TODOListApp.auth_service.Entity.User;
 import TODOListApp.auth_service.Entity.UserPrincipal;
+import TODOListApp.auth_service.Exception.InvalidJwtToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -110,7 +111,7 @@ public class JwtService {
 
         if (!isValid) {
             logger.error("Token is invalid or expired for user: {}", username);
-            throw new RuntimeException("Invalid or expired token");
+            throw new InvalidJwtToken("Invalid or expired token");
         }
 
         response.put("username", username);

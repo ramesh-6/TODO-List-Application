@@ -3,6 +3,7 @@ package TODOListApp.auth_service.Service;
 import TODOListApp.auth_service.Client.UserServiceClient;
 import TODOListApp.auth_service.Entity.User;
 import TODOListApp.auth_service.Entity.UserPrincipal;
+import TODOListApp.auth_service.Exception.AuthenticationFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailServiceImpl implements UserDetailService {
 
-    @Lazy
-    @Autowired
-    AuthenticationManager authManager;
+    private final AuthenticationManager authManager;
 
-    @Autowired
-    JwtService jwtService;
+    private final JwtService jwtService;
 
-    @Autowired
-    UserServiceClient userServiceClient;
+    private final UserServiceClient userServiceClient;
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailServiceImpl.class);
+
+    @Autowired
+    public UserDetailServiceImpl(@Lazy AuthenticationManager authManager, JwtService jwtService, UserServiceClient userServiceClient) {
+        this.authManager = authManager;
+        this.jwtService = jwtService;
+        this.userServiceClient = userServiceClient;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,21 +46,30 @@ public class UserDetailServiceImpl implements UserDetailService {
             }
             return new UserPrincipal(user);
         } catch (Exception e) {
+            logger.error("Exception when trying to fetch user '{}' via Feign client: {}", username, e.toString(), e);
             throw new UsernameNotFoundException("Failed to load user: " + username, e);
         }
     }
 
     public String verify(User user) {
         logger.info("Verifying user");
-        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if (authentication.isAuthenticated()) {
-            ResponseEntity<User> res = userServiceClient.findByUsername(user.getUsername());
-            User authenticatedUser = res.getBody();
-            System.out.println("Authenticated username: " + authenticatedUser.getUsername() + " id: " + authenticatedUser.getId());
-            return jwtService.generateToken(authenticatedUser.getUsername(), authenticatedUser.getId());
-        } else {
-            return "fail";
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            if (authentication.isAuthenticated()) {
+                ResponseEntity<User> res = userServiceClient.findByUsername(user.getUsername());
+                User authenticatedUser = res.getBody();
+                logger.info("Authenticated username: {}, id: {}", authenticatedUser.getUsername(), authenticatedUser.getId());
+                return jwtService.generateToken(authenticatedUser.getUsername(), authenticatedUser.getId());
+            } else {
+                logger.warn("Authentication failed for user: {}", user.getUsername());
+                throw new AuthenticationFailedException("Authentication failed for user: " + user.getUsername());
+            }
+        } catch (Exception e) {
+            logger.error("Exception during verification of user '{}': {}", user.getUsername(), e.toString(), e);
+            throw new AuthenticationFailedException("Authentication failed for user: " + user.getUsername());
         }
     }
+
 
 }
