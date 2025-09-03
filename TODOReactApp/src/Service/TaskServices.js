@@ -34,7 +34,7 @@ export const getTasksByUsername = async (username) => {
 };
 export const addTask = async (task) => {
   try {
-    const response = await instance.post("/tasks", task);
+    const response = await instance.post("/task", task);
     return response.data;
   } catch (e) {
     throw new Error(e);

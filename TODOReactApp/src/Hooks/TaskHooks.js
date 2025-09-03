@@ -35,25 +35,23 @@ export function useTasks() {
 
   async function postTask(title, description, setTitle, setDescription) {
     try {
-      const data = [
-        ...tasks,
-        {
-          title: title,
-          description: description,
-          completed: false,
-          userID: user.id,
-        },
-      ];
-      const taskData = await addTask(data);
-      console.log("Adding data:", data);
-      setTasks(taskData);
+      const newTask = {
+        title: title,
+        description: description,
+        completed: false,
+        userID: user.id,
+      };
+      const createdTask = await addTask(newTask);
+      console.log("Created task:", createdTask);
+      setTasks(prevTasks => [...prevTasks, createdTask]);
       setTitle("");
       setDescription("");
     } catch (err) {
-      console.error("Error fetching tasks:", err);
+      console.error("Error creating task:", err);
       setError(err);
     }
-  }
+}
+
 
   async function toggleCheckbox(taskID) {
     try {
