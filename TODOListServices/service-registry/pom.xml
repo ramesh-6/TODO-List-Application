@@ -11,7 +11,7 @@
 	<groupId>TODOListApp</groupId>
 	<artifactId>serviceRegistry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>serviceRegistry</name>
+	<name>serviceregistry</name>
 	<description>Service Registry for TODO Application</description>
 	<url/>
 	<licenses>

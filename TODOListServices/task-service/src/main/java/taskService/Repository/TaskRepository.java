@@ -1,8 +1,8 @@
-package taskService.Repository;
+package taskservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import taskService.Entity.Task;
+import taskservice.entity.Task;
 
 import java.util.List;
 

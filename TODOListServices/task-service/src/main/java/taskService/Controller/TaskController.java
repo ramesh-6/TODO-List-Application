@@ -1,4 +1,4 @@
-package taskService.Controller;
+package taskservice.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import taskService.DTO.TaskDTO;
-import taskService.Service.TaskService;
+import taskservice.dto.TaskDTO;
+import taskservice.service.TaskService;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController

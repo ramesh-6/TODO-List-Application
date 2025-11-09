@@ -1,4 +1,4 @@
-package taskService.Service;
+package taskservice.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,12 +7,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import taskService.Client.UserServiceClient;
-import taskService.DTO.TaskDTO;
-import taskService.DTO.TaskMapper;
-import taskService.Entity.Task;
-import taskService.Exception.*;
-import taskService.Repository.TaskRepository;
+import taskservice.client.UserServiceClient;
+import taskservice.dto.TaskDTO;
+import taskservice.dto.TaskMapper;
+import taskservice.entity.Task;
+import taskservice.exception.*;
+import taskservice.repository.TaskRepository;
 
 import java.util.List;
 import java.util.Optional;

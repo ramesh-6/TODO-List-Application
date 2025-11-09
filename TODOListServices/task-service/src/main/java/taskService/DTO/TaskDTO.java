@@ -1,4 +1,4 @@
-package taskService.DTO;
+package taskservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

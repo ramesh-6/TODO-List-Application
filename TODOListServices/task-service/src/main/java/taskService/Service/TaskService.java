@@ -1,6 +1,6 @@
-package taskService.Service;
+package taskservice.service;
 
-import taskService.DTO.TaskDTO;
+import taskservice.dto.TaskDTO;
 
 import java.util.List;
 

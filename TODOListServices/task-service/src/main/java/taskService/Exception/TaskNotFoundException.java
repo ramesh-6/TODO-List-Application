@@ -1,4 +1,4 @@
-package taskService.Exception;
+package taskservice.exception;
 
 public class TaskNotFoundException extends RuntimeException {
     public TaskNotFoundException(Long id) {

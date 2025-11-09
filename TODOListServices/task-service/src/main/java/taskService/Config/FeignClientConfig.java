@@ -1,4 +1,4 @@
-package taskService.Config;
+package taskservice.config;
 
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;

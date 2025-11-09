@@ -1,4 +1,4 @@
-package taskService.Exception;
+package taskservice.exception;
 
 import org.springframework.dao.DataAccessException;
 

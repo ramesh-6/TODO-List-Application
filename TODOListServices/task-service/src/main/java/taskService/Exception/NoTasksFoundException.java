@@ -1,4 +1,4 @@
-package taskService.Exception;
+package taskservice.exception;
 
 public class NoTasksFoundException extends RuntimeException {
     public NoTasksFoundException(String message) {

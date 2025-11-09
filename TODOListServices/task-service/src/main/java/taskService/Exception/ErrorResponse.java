@@ -1,4 +1,4 @@
-package taskService.Exception;
+package taskservice.exception;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

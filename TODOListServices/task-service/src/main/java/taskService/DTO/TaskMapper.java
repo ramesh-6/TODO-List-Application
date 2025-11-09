@@ -1,10 +1,14 @@
-package taskService.DTO;
+package taskservice.dto;
 
-import taskService.Entity.Task;
+import taskservice.entity.Task;
 
 public class TaskMapper {
 
     public static TaskDTO convertToDTO(Task task){
+        if (task == null) {
+            return null;
+        }
+
         TaskDTO dto = new TaskDTO();
         dto.setId(task.getId());
         dto.setTitle(task.getTitle());
@@ -15,6 +19,10 @@ public class TaskMapper {
     }
 
     public  static Task convertToEntity(TaskDTO dto){
+        if (dto == null) {
+            return null;
+        }
+
         Task task = new Task();
         task.setId(dto.getId());
         task.setTitle(dto.getTitle());
